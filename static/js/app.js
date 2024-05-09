@@ -1,3 +1,4 @@
+/*Seleziona vari elementi dal DOM (Document Object Model) che rappresentano parti di un'interfaccia utente per mostrare le informazioni meteorologiche*/
 var input = document.querySelector('.input_text');
 var main = document.querySelector('#name');
 var temp = document.querySelector('.temp');
@@ -13,10 +14,11 @@ var tempMin = document.querySelector('.temp_min');
 var icon = document.querySelector('.icon');
 
 
-button.addEventListener('click', function(name){
-fetch('https://api.openweathermap.org/data/2.5/weather?q='+input.value+'&appid=50a7aa80fa492fa92e874d23ad061374&units=metric')
-.then(response => response.json())
+button.addEventListener('click', function(name){ /*Aggiunge una risposta per il click sul pulsante di invio*/ 
+fetch('https://api.openweathermap.org/data/2.5/weather?q='+input.value+'&appid=50a7aa80fa492fa92e874d23ad061374&units=metric') /*Fa una chiamata all'API OpenWeatherMap per ottenere il meteo*/ 
+.then(response => response.json()) /*Converte la risposta in formato JSON*/
 .then(data => {
+/*Estrae le informazioni meteorologiche dalla risposta JSON*/
   var tempValue = data['main']['temp'];
   var nameValue = data['name'];
   var descValue = data['weather'][0]['description'];
@@ -29,7 +31,7 @@ fetch('https://api.openweathermap.org/data/2.5/weather?q='+input.value+'&appid=5
   var tempMaxValue = data['main']['temp_max'];
   var tempMinValue = data['main']['temp_min'];
 
-
+/*Mostra gli elementi nei paragrafi con i dati ottenuti*/
   main.innerHTML = nameValue;
   desc.innerHTML = "Desc: "+descValue;
   icon.src = 'https://openweathermap.org/img/w/'+iconImage+'.png'
@@ -41,10 +43,11 @@ fetch('https://api.openweathermap.org/data/2.5/weather?q='+input.value+'&appid=5
   input.value ="";
 
 })
-
+/*Aggiunge un messaggio in caso di errore nella richiesta fetch*/
 .catch(err => alert("Nome della città inesistente"));
 })
 
+/*Blocco di codice per visualizzare nella console il dizionario json contenente gli elementi meteo*/
 fetch('https://api.openweathermap.org/data/2.5/weather?q=Londra&appid=50a7aa80fa492fa92e874d23ad061374&units=metric')
     .then((response) => {
         // Controlla se la richiesta ha avuto successo
